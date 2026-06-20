@@ -1,0 +1,2 @@
+# dendritic
+Dendritic nixos setup
