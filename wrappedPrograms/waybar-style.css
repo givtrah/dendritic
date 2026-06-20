@@ -1,0 +1,221 @@
+@import "../../.cache/wal/colors-waybar.css";
+
+@define-color main-color @color13;
+
+* {
+    font-family: JetBrainsMono, otf-font-awesome;
+    font-size: 12px;
+/*    padding: 2px 4px; */
+}
+
+#window {
+    padding: 2px 10px;
+    margin: 4px 2px 4px 4px;
+    background: alpha(@background, 0.3);
+    border-radius: 10px;
+    color: lighter(@main-color);
+}
+
+window#waybar {
+    background: alpha(@background,0.3);
+    border-radius: 10px;
+}
+/* When is this used? */
+window#waybar.hidden {
+    opacity: 0.2;
+}
+
+/* Unsure WTF this does */
+window#waybar.termite {
+    background-color: #3F3F3F;
+}
+
+/* Something something when a chromium browser is shown? */
+window#waybar.chromium {
+    background-color: #000000;
+    border: none;
+}
+
+tooltip {
+    background: alpha(@background, 0.5);
+    border: 2px solid alpha(lighter(@main-color), 0.5);
+    border-radius: 10px;
+}
+
+tooltip label {
+    color: @foreground;
+}
+
+button {
+    /* Use box-shadow instead of border so the text isn't offset */
+    box-shadow: inset 0 -3px transparent;
+    /* Avoid rounded borders under each button name */
+    border: none;
+    border-radius: 0;
+}
+
+/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
+button:hover {
+    background-color: @color13;
+}
+
+/* Workspaces */
+#workspaces {
+    padding: 2px 2px; 
+    margin: 0px 0px;
+    background: alpha(@background, 0.8);
+    border-radius: 10px;
+}
+
+#workspaces button {
+    padding: 0 4px;
+    margin: 0px 0px;
+    border-radius: 6px;
+    color: lighter(@foreground);
+}
+
+#workspaces button.active {
+    transition: color 0.5s;
+    background-color: alpha(@color4, 0.7);
+    color: lighter(@main-color);
+}
+#workspaces button.urgent,
+#workspaces button.hover {
+    color: @color5;
+    background-color: transparent;
+}
+
+#workspaces button.focused {
+    background-color: @foreground;
+}
+
+
+
+/* you can set a style on hover for any module like this */
+#pulseaudio.hover {
+    background-color: #a37800;
+}
+
+/* Sensible defaults for everything */
+
+#backlight,
+#battery,
+#bluetooth,
+#cava,
+#clock,
+#cpu,
+#disk,
+#idle_inhibitor,
+#memory,
+#mpd,
+#mpris,
+#network,
+#pulseaudio,
+#temperature,
+#tray,
+#wireplumber,
+#custom-maestral {
+    background-color: alpha(@color5, 0.2);
+    padding: 0 10px;
+    border-radius: 10px;
+    color: lighter(@foreground); 
+}
+
+#memory,
+#temperature,
+#tray {
+    background-color: alpha(@color5, 0.4);
+}
+
+#backlight:hover,
+#battery:hover,
+#bluetooth:hover,
+#cava:hover,
+#clock:hover,
+#cpu:hover,
+#disk:hover,
+#idle_inhibitor:hover,
+#memory:hover,
+#mpd:hover,
+#mpris:hover,
+#network:hover,
+#pulseaudio:hover,
+#temperature:hover,
+#tray:hover,
+#wireplumber:hover {
+    background-color: alpha(@color6, 0.8);
+    padding: 0 10px;
+    border-radius: 10px;
+    color: lighter(@foreground);
+}
+
+
+
+
+
+
+
+#mpris {
+    background: alpha(@background, 0.4);
+    color: @foreground;
+    font-size: 10px;
+}
+
+#cava {
+    background: transparent;
+    color: @color6;
+}
+    
+
+#custom-distrologo {
+    color: lighter(@main-color);
+    font-size: 28px; 
+}
+
+
+
+#custom-maestral {
+    /* Add base styling here, e.g., padding, margin, etc. */
+    color: #ff0000; 
+    /* Default color if no specific status class applies */
+
+}
+
+#custom-maestral.error {
+    color: #ff6c75; /* Red */
+}
+
+#custom-maestral.up-to-date {
+    color: #ffc379; /* Green */
+}
+
+#custom-maestral.unknown {
+    color: #ffb2bf; /* Default grey/white */
+}
+
+
+
+#battery.charging, #battery.plugged {
+    color: #ffffff;
+    background-color: #26A65B;
+}
+
+#battery.critical:not(.charging) {
+    background-color: #f53c3c;
+    color: #ffffff;
+    animation-name: blink;
+    animation-duration: 0.5s;
+    animation-timing-function: steps(12);
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+
+label:focus {
+    background-color: #000000;
+}
+
+
+
+
+
