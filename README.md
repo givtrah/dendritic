@@ -1,2 +1,2 @@
 # dendritic
-Dendritic nixos setup
+Dendritic nixos setup using MangoWM instead of Hyprland (no Lua WM config).
