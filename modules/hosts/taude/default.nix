@@ -7,8 +7,6 @@
     "${builtins.fetchTarball "https://github.com/nix-community/disko/archive/master.tar.gz"}/module.nix"
     ./disko-config.nix
     
-    # Remote Flake Modules (Disko fetch directly or via inputs)
-
     # nixos dendritic modules (exposed by import-tree)
     self.nixosModules.all
     self.nixosModules.uwsm
@@ -24,14 +22,15 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # Kernel options and modules
-  # Enable KVM / virtualization
-  boot.kernelModules = [ "kvm-amd" "kvm-intel" ];    
+  # Enable KVM / virtualization and dvd/bluray drives (sg)
+  boot.kernelModules = [ "kvm-amd" "kvm-intel" "sg" ]; 
 
-  # Load NFS modules / enable NFS access at boot?
+  # Ensure NFS can be mounted at boot / load NFS modules
   boot.supportedFilesystems = [ "nfs" ];
 
+
   # Networking & Bluetooth
-  networking.hostName = "taupa"; # Define your hostname.                                            
+  networking.hostName = "taude"; # Define your hostname.                                            
   # Pick only one of the below networking options.                                                  
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.              
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.  
@@ -44,13 +43,11 @@
 
   # Essential services (ssh)                                                                                                  
   services.openssh.enable = true;   
-
+  services.ratbagd.enable = true; # dbus daemon for gaming mice (DPI, mapping etc), may not be strictly needed
 
   # PRINTING
   services.printing.enable = true;                                                                  
-  services.printing.drivers = with pkgs; [ gutenprint canon-cups-ufr2 ];                            
-  services.printing.logLevel = "debug";                                                             
-    services.ipp-usb.enable = true;                                                                   
+  services.ipp-usb.enable = true;                                                                   
     services.avahi = {                                                                              
     enable = true;                                                                                  
     nssmdns4 = true;                                                                                
