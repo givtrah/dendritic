@@ -17,7 +17,7 @@
       pkgs.adwaita-icon-theme 
 
       # Import and evaluate scripts, passing the module's pkgs context down
-      (import ./scripts/wall-random.nix { inherit pkgs; })
+      (import ./scripts/wall-random.nix { inherit pkgs; wallpaperDir = ./../../wallpapers; })
       (import ./scripts/waybar-reload.nix { inherit pkgs; })
     ];
 

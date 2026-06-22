@@ -13,7 +13,7 @@ pkgs.writeShellApplication {
 
   text = ''
     # Default directory - using shell expansion for HOME
-    DEFAULT_DIR="''${HOME}/.dotfiles/wallpapers"
+    DEFAULT_DIR="${wallpaperDir}" # defined when the program is defined in mango/default.nix
 
     if [ -z "''${1:-}" ]; then
       DIR="$DEFAULT_DIR"
