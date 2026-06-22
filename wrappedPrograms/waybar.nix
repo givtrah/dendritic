@@ -11,8 +11,8 @@
         on-click = "activate";
         format = "{id}";
         persistent-workspaces = {
-          "DP-1" = [1 2 3 4 5 6 7];
-          "DP-2" = [8 9 10];
+          "DP-1" = [1 2 3 4 5 6];
+          "DP-2" = [7 8 9];
         };
       };
 
@@ -20,8 +20,8 @@
         on-click = "activate";
         format = "{id}";
         persistent-workspaces = {
-          "DP-2" = [1 2 3 4 5 6 7];
-          "DP-4" = [8 9 10];
+          "DP-2" = [1 2 3 4 5 6];
+          "DP-4" = [7 8 9];
         };
       };
 
@@ -29,7 +29,7 @@
         on-click = "activate";
         format = "{id}";
         persistent-workspaces = {
-          "eDP-1" = [1 2 3 4 5 6 7];
+          "eDP-1" = [1 2 3 4 5 6];
         };
       };
 
@@ -37,7 +37,7 @@
         on-click = "activate";
         format = "{id}";
         persistent-workspaces = {
-          "eDP-1" = [1 2 3 4 5 6 7];
+          "eDP-1" = [1 2 3 4 5 6];
         };
       };
 
@@ -93,10 +93,10 @@
 					"clock"
 				];
 				
-				"hyprland/workspaces" = workspacesConfigs.${hostname} or workspacesConfigs.default;
+				"ext/workspaces" = workspacesConfigs.${hostname} or workspacesConfigs.default;
 
-			"hyprland/window" = {
-				separate-outputs = true;
+			"dwl/window" = {
+				format = "{title}";
 				icon = true;
 				icon-size = 24;
 			};

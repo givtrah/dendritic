@@ -330,18 +330,16 @@
         };
       };
 
-
-
-      uwsm = {
-        enable = true;
-        waylandCompositors = {
-          mango = {
-            prettyName = "MangoWM";
-            comment = "Mango Window Manager managed by UWSM";
-            binPath = "/run/current-system/sw/bin/mango"; # CHECK!
-          };
-        };
-      };
+#      uwsm = {
+#        enable = true;
+#        waylandCompositors = {
+#          mango = {
+#            prettyName = "MangoWM";
+#            comment = "Mango Window Manager managed by UWSM";
+#            binPath = "/run/current-system/sw/bin/mango"; # CHECK!
+#          };
+#        };
+#      };
 
       # Enable Mango WM
       mango.enable = true;
