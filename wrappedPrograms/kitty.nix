@@ -15,8 +15,7 @@
 
     # 3. Handle Font overrides directly (ensures the paths exist in the store)
     font = {
-      package = pkgs.nerd-fonts.jetbrains-mono;
-      name = font_family;
+      name = "JetBrains Mono Nerd Font";
       size = 12;
     };
 

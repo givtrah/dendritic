@@ -3,10 +3,10 @@
     inputs.wrapper-modules.flakeModules.wrappers
   ];
 
-  config = {
+#  config = {
     systems = [
       "aarch64-linux"
       "x86_64-linux"
     ];
-  };
+#  };
 }

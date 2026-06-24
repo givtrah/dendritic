@@ -3,7 +3,7 @@
   # 1. Your Custom Wrapped Starship ("starfish")
   flake.wrappers.starship = { wlib, pkgs, ... }: {
     imports = [ wlib.wrapperModules.starship ];
-    configFile.content = {
+    settings = {
       add_newline = false;
       aws.disabled = true;
       gcloud.disabled = true;
@@ -15,3 +15,4 @@
       rust.disabled = true;
     };
   };
+}

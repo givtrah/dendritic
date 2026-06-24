@@ -3,21 +3,21 @@
     wlib,
     pkgs,
     lib,
+    system,
     ...
   }: {
     # 1. Import the official rofi wrapper module
     imports = [ wlib.wrapperModules.rofi ];
     
-    # Use the Wayland fork of rofi since you are on Hyprland
-    package = pkgs.rofi-wayland; 
+    package = pkgs.rofi; 
 
     # 2. Native Nix ExtraConfig options (No raw text strings needed)
-    extraConfig = {
+    settings = {
       modi = "drun,run,window";
       icon-theme = "Papirus";
       show-icons = true;
       # Automatically pass down your custom wrapped Kitty executable path
-      terminal = "${lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.kitty}"; 
+      terminal = "${lib.getExe self.packages.${pkgs.hostPlatform.system}.kitty}"; 
       drun-display-format = "{icon} {name}";
       location = 0;
       disable-history = false;
@@ -90,7 +90,7 @@
       };
 
       "element-text" = {
-        vertical-align = 0.5;
+        vertical-align = "0.5";
         text-color = "inherit";
       };
     };

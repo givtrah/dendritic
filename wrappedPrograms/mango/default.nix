@@ -9,43 +9,59 @@
     # Import the official upstream mangowc wrapper module
     imports = [ wlib.wrapperModules.mangowc ];
 
-    # Set the underlying compositor binary layer to the mango github nix flake
-    package = inputs.mangowm.packages.${pkgs.stdenv.hostPlatform.system}.default; 
 
-    # required packages
-    extraPackages = [ 
-      pkgs.adwaita-icon-theme 
+    # Add missing option registration so config.hostName can evaluate safely!
+    options = {
+      hostName = lib.mkOption {
+        type = lib.types.str;
+        default = "default";
+        description = "Target hostname for loading local monitor definitions";
+      };
+    };
 
-      # Import and evaluate scripts, passing the module's pkgs context down
-      (import ./scripts/_wall-random.nix { inherit pkgs; wallpaperDir = ./../../wallpapers; })
-      (import ./scripts/_waybar-reload.nix { inherit pkgs; })
-    ];
 
-    # Concatenate raw text configuration files into the module's config text stream
-    extraConfig = ''
-      # assembled automatically via wrappedPrograms/mango
+    # wrap all definitions in a dedicated config block
+    config = {
+      # Set the underlying compositor binary layer to the mango github nix flake
+      package = inputs.mangowm.packages.${pkgs.stdenv.hostPlatform.system}.default; 
 
-      # First include default colors (may be overwritten later by importing pywal16 colors)
-      ${builtins.readFile ./theme-colors-default.conf}
+      # required packages
+      runtimePkgs = [ 
+        pkgs.adwaita-icon-theme 
 
-      # Main config (everything not below)
-      ${builtins.readFile ./config.conf}
+        # Import and evaluate scripts, passing the module's pkgs context down
+        (import ./scripts/_wall-random.nix { inherit pkgs; wallpaperDir = ./../../wallpapers; })
+        (import ./scripts/_waybar-reload.nix { inherit pkgs; })
+      ];
 
-      # Monitor layouts (see below how to call mango)
-      ${builtins.readFile "${./.}$/monitors-${config.hostName}.conf"}
+      # Concatenate raw text configuration files into the module's config text stream
+      extraConfig = ''
+        # assembled automatically via wrappedPrograms/mango
 
-      # Core Keybindings & Shortcuts
-      ${builtins.readFile ./keybindings.conf}
+        # First include default colors (may be overwritten later by importing pywal16 colors)
+        ${builtins.readFile ./theme-colors-default.conf}
 
-      # Theme, Borders, Visuals & Gaps
-      ${builtins.readFile ./theme.conf}
+        # Main config (everything not below)
+        ${builtins.readFile ./config.conf}
 
-      # Window Layouts & Management Rules
-      ${builtins.readFile ./layouts.conf}
+        # Monitor layouts (Fixing typo & using safe path fallback or string coercion)
+        ${if builtins.pathExists (./. + "/monitors-${config.hostName}.conf") 
+          then builtins.readFile (./. + "/monitors-${config.hostName}.conf")
+          else "# No specific monitor config found for ${config.hostName}"}
 
-      # Environment Autostart Routines
-      ${builtins.readFile ./autostart.conf}
-    '';
+        # Core Keybindings & Shortcuts
+        ${builtins.readFile ./keybindings.conf}
+
+        # Theme, Borders, Visuals & Gaps
+        ${builtins.readFile ./theme.conf}
+
+        # Window Layouts & Management Rules
+        ${builtins.readFile ./layouts.conf}
+
+        # Environment Autostart Routines
+        ${builtins.readFile ./autostart.conf}
+      '';
+    };
   };
 }
 

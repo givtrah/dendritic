@@ -12,23 +12,33 @@
     package = pkgs.neovim-unwrapped;
 
     # 3. Handle runtime host providers
-    withNodeJs = true;
-    withPython3 = true;
-    withRuby = true;
+#    overrides = {
+#      withNodeJs = true;
+#      withPython3 = true;
+#      withRuby = true;
+#    };
 
     # 4. Ingest your raw standalone Lua configuration file
-    initLua = builtins.readFile ./nvim-init.lua;
+
+    # extraConfig = builtins.readFile ./nvim-init.lua;
+#    initLua = ./nvim-init.lua;
+    
+    specs.INIT_MAIN.data = builtins.readFile ./nvim-init.lua;
+
 
     # 5. Native Luarocks support maps cleanly here
-    extraLuaPackages = ls: with ls; [ luarocks ];
+# NOT WORKING, ADDED BELOW    extraLuaPackages = ls: with ls; [ luarocks ];
+
 
     # 6. Isolate development packages and Language Servers directly to Neovim's internal PATH
-    extraPackages = with pkgs; [
+    runtimePkgs = with pkgs; [
       # Language Servers (Look Ma, No Mason!)
       lua-language-server       # Lua
       pyright                   # Python
       rPackages.languageserver  # R
       tinymist                  # Typst
+
+      luarocks
 
       # Build tools & system dependencies used by plugins (e.g., Telescope, Treesitter compiles)
       doq
