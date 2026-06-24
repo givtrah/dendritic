@@ -27,6 +27,9 @@
       self.nixosModules.hardwareTaude
       self.nixosModules.diskoTaude
 
+      # Mango git
+      # inputs.mangowm.nixosModules.mango
+
       # Nixos dendritic modules (exposed by importTree)
       self.nixosModules.all
       self.nixosModules.uwsm
@@ -71,16 +74,6 @@
     };                             
 
     # Mount additional drives
-    fileSystems."/mnt/vm" = {                                                                       
-      device = "/dev/disk/by-uuid/a6928e70-7552-4a8b-83cc-2834259c3e35";                                                                         
-      fsType = "btrfs";                                                                                
-      options = [ 
-        "noatime" 
-        "compress=zstd:3" 
-        "users" 
-        "nofail" 
-      ];                                                                                              
-    };
 
     system.stateVersion = "25.11"; 
   };

@@ -1,11 +1,12 @@
 { self, ... }: {
   # This wraps the disko definition into a safe flake-parts module
   flake.nixosModules.diskoTaude = {
+
   disko.devices = {
     disk = {
       disk1 = {
       type = "disk";
-      device = "/dev/nvme2n1";
+      device = "/dev/nvme0n1";
       content = {
         type = "gpt";
         partitions = {
@@ -15,7 +16,7 @@
             content = {
               type = "filesystem";
               format = "vfat";
-              mountpoint = "/boot";
+	     mountpoint = "/boot";
               mountOptions = [ "defaults" ];
             };
           };
@@ -26,40 +27,32 @@
               };
             };
           root = {
-            size = "640G";
+            size = "100%";
             content = {
               type = "btrfs";
               extraArgs = [ "-f" ]; # Override existing partition, probably means format it
               subvolumes = {
-                "/rootfs" = {
+                "rootfs" = {
                   mountpoint = "/";
                   mountOptions = [ "compress=lzo" "noatime" ];
                   };
-                "/nix" = {
+                "nix" = {
                    mountpoint = "/nix";
                    mountOptions = [ "compress=lzo" "noatime" ];
                   };
-                "/var/log" = {
+                "log" = {
                    mountpoint = "/var/log";
                    mountOptions = [ "compress=lzo" "noatime" ];
                   };
                 };
               };
             };
-           vms = {
-             size = "100%";
-             content = {
-               type = "filesystem";
-               format = "ext4";
-               mountpoint = "/mnt/vm";
-               };
-             };
            };
          };
        };
     disk2 = {
       type = "disk";
-      device = "/dev/nvme0n1";
+      device = "/dev/nvme1n1";
       content = {
         type = "gpt";
         partitions = {
@@ -68,7 +61,7 @@
               content = {
                 type = "luks";
                 name = "crypted";
-                extraOpenArgs = [ "--allow-discards" ];
+		settings.allowDiscards = true;
                 content = {
                   type = "btrfs";
                   extraArgs = [ "-f" ];
@@ -89,4 +82,7 @@
     };
   };
 }
+
+
+
 

@@ -36,29 +36,20 @@
 
       # Concatenate raw text configuration files into the module's config text stream
       extraConfig = ''
-        # assembled automatically via wrappedPrograms/mango
-
-        # First include default colors (may be overwritten later by importing pywal16 colors)
         ${builtins.readFile ./theme-colors-default.conf}
 
-        # Main config (everything not below)
         ${builtins.readFile ./config.conf}
 
-        # Monitor layouts (Fixing typo & using safe path fallback or string coercion)
         ${if builtins.pathExists (./. + "/monitors-${config.hostName}.conf") 
           then builtins.readFile (./. + "/monitors-${config.hostName}.conf")
           else "# No specific monitor config found for ${config.hostName}"}
 
-        # Core Keybindings & Shortcuts
         ${builtins.readFile ./keybindings.conf}
 
-        # Theme, Borders, Visuals & Gaps
         ${builtins.readFile ./theme.conf}
 
-        # Window Layouts & Management Rules
         ${builtins.readFile ./layouts.conf}
 
-        # Environment Autostart Routines
         ${builtins.readFile ./autostart.conf}
       '';
     };

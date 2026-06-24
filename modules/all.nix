@@ -80,6 +80,14 @@
     lib,
     ...
   }: {
+
+    # modules that are always needed
+    imports = [
+      inputs.mangowm.nixosModules.mango
+      inputs.nix-flatpak.nixosModules.nix-flatpak
+
+    ];
+
     # Enable OpenGL
     hardware.graphics.enable = lib.mkDefault true;
 
@@ -173,6 +181,11 @@
    
     # SERVICES
     services = {
+      tailscale.enable = true;
+
+      # Enable timesync (ntp) using default (nix) servers
+      timesyncd.enable = true;
+
       # Enable periodic scrub on btrfs (default once per month) as well as periodic trim (default once per week)
       btrfs.autoScrub.enable = true;
       fstrim.enable = true;
@@ -191,14 +204,14 @@
       # SDDM
       xserver.enable = true;
 
-      displayManager.sddm = {
-        enable = true;
-        wayland.enable = true;
-        # Default session is Hyprland
-        defaultSession = "hyprland-uwsm";
-        #theme = "astronaut"; # The only theme working?!?!?
-      };
+      displayManager = {
+        defaultSession = "mango";
 
+        sddm = {
+          enable = true;
+          wayland.enable = true;
+        };
+      };
       # KDE desktop fallback
       desktopManager.plasma6.enable = true;
 
@@ -232,8 +245,6 @@
     };
 
 
-    # Enable timesync (ntp) using default (nix) servers
-    timesyncd.enable = true;
 
 
     # TZ and locale
@@ -275,10 +286,6 @@
 
 
 
-
-
-    # Enable tailscale
-    tailscale.enable = true;
 
 
     # increase watchable files (to stop dropbox/maestral from blinking...)
@@ -323,11 +330,16 @@
       dconf = {
         enable = true;
         # directories at top please GTK, please - potentially this goes into dconf.settings outside programs?
-        settings."org/gtk/settings/file-chooser" = {
-          sort-directories-first = true;
-        };
+        profiles.user.databases = [
+          {
+            settings = {
+              "org/gtk/settings/file-chooser" = {
+                sort-directories-first = true;
+              };
+            };
+          }
+        ];
       };
-
 #      uwsm = {
 #        enable = true;
 #        waylandCompositors = {
@@ -366,10 +378,10 @@
         };
       };
 
-      pywal = {
-        enable = true;
-        package = pkgs.pywal16; # use pywal16 instead of the org package
-      };
+#      pywal = {
+#        enable = true;
+#        package = pkgs.pywal16; # use pywal16 instead of the org package
+#      };
 
 
     };
@@ -442,7 +454,7 @@
 
 
       # OTHER
-
+      pywal16
 
       vim # so we at least have vi - for neovim, see home-manager
 

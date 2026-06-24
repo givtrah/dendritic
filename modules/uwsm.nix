@@ -1,4 +1,4 @@
-{ lib, ... }: {
+{ inputs, pkgs, config, lib, ... }: {
   # Declare the aspect layout
   flake.nixosModules.uwsm = { config, pkgs, ... }: {
     
@@ -15,7 +15,12 @@
           comment = "Mango Window Manager managed by UWSM";
           
           # Dynamically map the path using sessionPackages so it points to your wrapper automatically
-          binPath = "${config.hardware.displayManager.sessionPackages}/bin/mango";
+#          binPath = "${config.services.displayManager.sessionPackages}/bin/mango";
+          binPath = "${inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.mango.wrap { 
+            hostName = config.networking.hostName; 
+          }}/bin/mango";
+
+
         };
       };
     };
