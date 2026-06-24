@@ -17,7 +17,7 @@
       icon-theme = "Papirus";
       show-icons = true;
       # Automatically pass down your custom wrapped Kitty executable path
-      terminal = "${lib.getExe self.packages.${pkgs.hostPlatform.system}.kitty}"; 
+      terminal = "${lib.getExe self.packages.${pkgs.stdenv.hostPlatform.system}.kitty}"; 
       drun-display-format = "{icon} {name}";
       location = 0;
       disable-history = false;

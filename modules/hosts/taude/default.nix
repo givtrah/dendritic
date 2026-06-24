@@ -20,12 +20,12 @@
     ...
   }: {
     imports = [
-      # Local Hardware & Device-Specific Subsystems
-      ./hardware-configuration.nix
-      ./disko-config.nix
-      
       # Pull Disko safely from inputs or fallback to fetchTarball
       (inputs.disko.nixosModules.disko or "${builtins.fetchTarball "https://github.com/nix-community/disko/archive/master.tar.gz"}/module.nix")
+
+      # Local Hardware & Device-Specific Subsystems
+      self.nixosModules.hardwareTaude
+      self.nixosModules.diskoTaude
 
       # Nixos dendritic modules (exposed by importTree)
       self.nixosModules.all
