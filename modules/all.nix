@@ -280,8 +280,6 @@
     # Enable tailscale
     tailscale.enable = true;
 
-    };
-
 
     # increase watchable files (to stop dropbox/maestral from blinking...)
     boot.kernel.sysctl = { "fs.inotify.max_user_watches" = "4194304"; };
@@ -315,7 +313,7 @@
 
 
 
-    gtk.gtk4.theme = config.gtk.theme  # might be a home-manager thing?
+#    gtk.gtk4.theme = config.gtk.theme;  # might be a home-manager thing? Yes, not needed
 
 
     # PROGRAMS
@@ -356,7 +354,7 @@
       firefox = {
         enable = true;
         languagePacks = [ "en-US" ];
-        configPath = "${config.xdg.configHome}/mozilla/firefox";
+#        configPath = "${config.xdg.configHome}/mozilla/firefox";
       };
 
       # BASH - careful, does this work with the wrapped module?
@@ -724,7 +722,6 @@
 
 
 
-    ];
 
 
   };

@@ -1,4 +1,4 @@
-{ self, ... }: {
+{ inputs, self, ... }: {
   flake.wrappers.mango = {
     wlib,
     pkgs,
@@ -17,8 +17,8 @@
       pkgs.adwaita-icon-theme 
 
       # Import and evaluate scripts, passing the module's pkgs context down
-      (import ./scripts/wall-random.nix { inherit pkgs; wallpaperDir = ./../../wallpapers; })
-      (import ./scripts/waybar-reload.nix { inherit pkgs; })
+      (import ./scripts/_wall-random.nix { inherit pkgs; wallpaperDir = ./../../wallpapers; })
+      (import ./scripts/_waybar-reload.nix { inherit pkgs; })
     ];
 
     # Concatenate raw text configuration files into the module's config text stream
@@ -32,7 +32,7 @@
       ${builtins.readFile ./config.conf}
 
       # Monitor layouts (see below how to call mango)
-      ${builtins.readFile (./ + "/monitors-${config.hostName}.conf")}
+      ${builtins.readFile "${./.}$/monitors-${config.hostName}.conf"}
 
       # Core Keybindings & Shortcuts
       ${builtins.readFile ./keybindings.conf}

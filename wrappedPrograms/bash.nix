@@ -1,4 +1,5 @@
-flake.wrappers.bash = {
+{ self, ... }: {
+  flake.wrappers.bash = {
     wlib,
     pkgs,
     lib,
@@ -30,7 +31,7 @@ flake.wrappers.bash = {
 
         export PATH="$HOME/.cache/.bun/bin:$PATH"
 
-        # Initialize your CUSTOM starfish instead of vanilla pkgs.starship!
+        # Initialize your CUSTOM starship instead of vanilla pkgs.starship!
         eval "$(${lib.getExe myStarship} init bash)"
       '';
     };

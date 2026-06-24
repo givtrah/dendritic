@@ -44,8 +44,7 @@
 #  xemu # original xbox - not compiling 2025-09-09
  
   dgen-sdl # Sega Genesis / Megadrive
-#  flycast # Sega Dreamcast, Naomi and Atomiswave emulator - b
-roken 2025-01-06
+#  flycast # Sega Dreamcast, Naomi and Atomiswave emulator - broken 2025-01-06
 
   stella # Atari 2600
 #  openmsx # MSX - not compiling 2025-08-23

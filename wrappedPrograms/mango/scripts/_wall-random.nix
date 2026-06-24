@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs, lib, wallpaperDir }:
 
 pkgs.writeShellApplication {
   name = "wall-random";
