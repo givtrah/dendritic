@@ -28,8 +28,11 @@
       self.nixosModules.diskoTaupa
 
 
+      self.nixosModules.wrapped
+
       # Nixos dendritic modules (exposed by importTree)
       self.nixosModules.all
+      self.nixosModules.lock
       self.nixosModules.uwsm
       self.nixosModules.work
     ];
