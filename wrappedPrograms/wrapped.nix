@@ -1,32 +1,22 @@
-# all wrapped programs in a module 
 { self, ... }: {
   
-  # Register directly into your framework's module tree
   flake.nixosModules.wrapped = { config, pkgs, ... }: {
     
     environment.systemPackages = [
-      # Evaluate your custom shell wrappers
-      (self.wrappers.bash.wrap { })
-      (self.wrappers.starship.wrap { })
-      (self.wrappers.git { })
-      (self.wrappers.kitty { })
-      (self.wrappers.nvim { })
-      (self.wrappers.rofi { })
-      (self.wrappers.swayidle { })
-      (self.wrappers.swaylock { })
+      # 1. Host-dependent wrappers that need custom arguments
+      (self.wrappers.mango.wrap { inherit pkgs; hostName = config.networking.hostName; })
+      (self.wrappers.waybar.wrap { inherit pkgs; hostName = config.networking.hostName; })
 
-      # Evaluate MangoWM with the running host context parameters
-      (self.wrappers.mango.wrap { hostName = config.networking.hostName; })
-
-      # Same for waybar
-      (self.wrappers.waybar.wrap { hostName = config.networking.hostName; })
-
-
-
-
-
-    ];
+      # 2. Cleanly evaluate all standard wrappers by mapping over a list
+    ] ++ (map (name: self.wrappers.${name}.wrap { inherit pkgs; }) [
+      "starship"
+      "git"
+      "kitty"
+      "neovim"
+      "rofi"
+      "swaylock"
+      "swayidle"
+    ]);
 
   };
 }
-

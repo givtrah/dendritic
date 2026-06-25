@@ -20,26 +20,25 @@
       ];
 
       # 4. Feed your event triggers straight to the wrapper settings block
-      settings = {
+      events = {
         # Master Execution Controls
-        lockCmd = "loginctl lock-session";
-        beforeSleepCmd = "loginctl lock-session";
-
-        # Event Timers Sequence
-        timeouts = [
-          # Timeout 1: 15 Minutes (900s) -> Run Lock Routine
-          {
-            timeout = 900;
-            command = "loginctl lock-session";
-          }
-          # Timeout 2: 20 Minutes (1200s) -> Power Off Screen
-          {
-            timeout = 1200;
-            command = "wlopm --off *";
-            resumeCommand = "wlopm --on * && brightnessctl -r";
-          }
-        ];
+        lock = "loginctl lock-session";
+        before-sleep = "loginctl lock-session";
       };
+      # Event Timers Sequence
+      timeouts = [
+        # Timeout 1: 15 Minutes (900s) -> Run Lock Routine
+        {
+          timeout = 900;
+          command = "loginctl lock-session";
+        }
+        # Timeout 2: 20 Minutes (1200s) -> Power Off Screen
+        {
+          timeout = 1200;
+          command = "wlopm --off *";
+          resumeCommand = "wlopm --on * && brightnessctl -r";
+        }
+      ];
     };
   };
 }
