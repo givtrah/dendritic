@@ -12,6 +12,7 @@
       (self.wrappers.kitty { })
       (self.wrappers.nvim { })
       (self.wrappers.rofi { })
+      (self.wrappers.swaylock { })
 
       # Evaluate MangoWM with the running host context parameters
       (self.wrappers.mango.wrap { hostName = config.networking.hostName; })

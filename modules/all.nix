@@ -86,14 +86,6 @@
       inputs.mangowm.nixosModules.mango
       inputs.nix-flatpak.nixosModules.nix-flatpak
 
-	flake.wrappers.neovim
-	flake.wrappers.mango
-	flake.wrappers.waybar
-	flake.wrappers.bash
-	flake.wrappers.git
-	flake.wrappers.kitty
-	flake.wrappers.starship
-	flake.wrappers.rofi
     ];
 
     # Enable OpenGL
