@@ -21,7 +21,8 @@ pkgs.writeShellApplication {
     else
       # Kill the Waybar process
       echo "Killing Waybar (PID: $PID)..."
-      kill "$PID"
+#      kill "$PID"
+      pkill waybar
       sleep 1 
     fi
 

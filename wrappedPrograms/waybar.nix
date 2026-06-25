@@ -37,7 +37,7 @@
       };
 
       # FIX: We define the 'settings' variable right here so it can be evaluated below!
-      settings = {
+      settingsData = {
         layer = "top";
         position = "bottom";
         height = null; 
@@ -47,8 +47,8 @@
 
         modules-left = [
           "custom/distrologo"
-          "hyprland/workspaces"
-          "hyprland/window"
+          "ext/workspaces"
+          "dwl/window"
         ];
         
         modules-center = [
@@ -182,7 +182,6 @@
         };
       };
 
-
     in {
       imports = [ wlib.wrapperModules.waybar ];
 
@@ -195,14 +194,9 @@
       };
 
       config = {
-        # 1. Feed your configuration layout directly into the module's native settings
-        settings = settings;
+        settings = settingsData;
+        "style.css".content = builtins.readFile ./waybar-style.css;
 
-        # 2. Add your custom CSS stylesheet without overriding the internal config definition
-        constructFiles.stylesheet = {
-          content = builtins.readFile ./waybar-style.css;
-          relPath = "style.css";
-        };
       };
     };
 }

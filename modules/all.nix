@@ -147,6 +147,7 @@
               package = pkgs.kdePackages.kwallet-pam;
             };
           };
+          swaylock = {};
         };
       };
 
@@ -205,7 +206,7 @@
       xserver.enable = true;
 
       displayManager = {
-        defaultSession = "mango";
+        defaultSession = "mango-uwsm";
 
         sddm = {
           enable = true;
@@ -352,15 +353,15 @@
 #      };
 
       # Enable Mango WM
-      mango.enable = true;
+# should be enabled by including the package in wrapped.nix      mango.enable = true;
 
       # Enable Hyprland
-      hyprland = {
-		    enable = true;
-		    withUWSM = true; # with universal wayland session manager - better systemd integration
-		    xwayland.enable = true;
-		    portalPackage = pkgs.xdg-desktop-portal-hyprland; 
-	    };
+#      hyprland = {
+#		    enable = true;
+#		    withUWSM = true; # with universal wayland session manager - better systemd integration
+#		    xwayland.enable = true;
+#		    portalPackage = pkgs.xdg-desktop-portal-hyprland; 
+#	    };
 
       # Firefox (careful?)
       firefox = {
@@ -566,6 +567,8 @@
       gawk
       zstd
       gnupg
+
+      wlr-randr
 
       # nix related
       #

@@ -9,6 +9,7 @@ pkgs.writeShellApplication {
     findutils      # for 'find'
     coreutils      # for 'echo', 'test', etc.
     waypaper       # for 'waypaper'
+    swaybg
   ];
 
   text = ''
