@@ -26,14 +26,13 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("wl-clip-persist --clipboard regular & clipse -listen")
 
     -- Wallpapers, Themes, & UI Elements
-    hl.exec_cmd("pywal -R")
     hl.exec_cmd("wall-random")
     hl.exec_cmd("waybar-reload")
 end)
 
 -- Executed every single time Hyprland reloads its configuration state
 hl.on("hyprland.reload", function()
-    hl.exec_cmd("pkill -SIGUSR2 waybar || waybar --log-level error")
+    hl.exec_cmd("waybar-reload")
 end)
 
 
