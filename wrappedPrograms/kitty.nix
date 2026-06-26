@@ -13,6 +13,13 @@
     # 2. Tell the wrapper what engine or binary layer to configure
     package = pkgs.kitty;
 
+    # 2.5 - required dependencies
+    runtimePkgs = [
+      pkgs.kitty-themes
+      pkgs.kitty-img
+    ];
+
+
     # 3. Handle Font overrides directly (ensures the paths exist in the store)
     font = {
       name = "JetBrains Mono Nerd Font";

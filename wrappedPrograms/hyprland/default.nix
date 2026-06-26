@@ -47,6 +47,11 @@
           content = builtins.readFile ./autostart.lua;
         };
 
+        looknfeel = {
+          relPath = "hyprland/looknfeel.lua";
+          content = builtins.readFile ./looknfeel.lua;
+        };
+
         windows = {
           relPath = "hyprland/windows.lua";
           content = builtins.readFile ./windows.lua;
@@ -81,6 +86,7 @@
             -- Load modules in sequential order
             require("monitors")
             require("core")
+            require("looknfeel")
             require("windows")
             require("keybindings")
             require("autostart")

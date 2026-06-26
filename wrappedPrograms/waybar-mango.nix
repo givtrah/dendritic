@@ -1,6 +1,6 @@
 { self, ... }: {
 
-  flake.wrappers.waybar = { wlib, pkgs, lib, config, ... }:
+  flake.wrappers.waybar-mango = { wlib, pkgs, lib, config, ... }:
     
     let 
       workspacesConfigs = {
@@ -8,27 +8,27 @@
           on-click = "activate";
           format = "{id}";
           persistent-workspaces = {
-            "DP-1" = [1 2 3 4 5 6 7];
-            "DP-2" = [8 9 10];
+            "DP-1" = [1 2 3 4 5 6];
+            "DP-2" = [7 8 9];
           };
         };
         taupa = {
           on-click = "activate";
           format = "{id}";
           persistent-workspaces = {
-            "DP-2" = [1 2 3 4 5 6 7];
-            "DP-4" = [8 9 10];
+            "DP-2" = [1 2 3 4 5 6];
+            "DP-4" = [7 8 9];
           };
         };
         taumac = {
           on-click = "activate";
           format = "{id}";
-          persistent-workspaces = { "eDP-1" = [1 2 3 4 5 6 7]; };
+          persistent-workspaces = { "eDP-1" = [1 2 3 4 5 6]; };
         };
         tausurf = {
           on-click = "activate";
           format = "{id}";
-          persistent-workspaces = { "eDP-1" = [1 2 3 4 5 6 7]; };
+          persistent-workspaces = { "eDP-1" = [1 2 3 4 5 6]; };
         };
         default = {
           on-click = "activate";
@@ -47,8 +47,8 @@
 
         modules-left = [
           "custom/distrologo"
-          "hyprland/workspaces"
-          "hyprland/window"
+          "ext/workspaces"
+          "dwl/window"
         ];
         
         modules-center = [
@@ -66,10 +66,9 @@
           "clock"
         ];
         
-        "hyprland/workspaces" = workspacesConfigs.${config.hostName} or workspacesConfigs.default;
+        "ext/workspaces" = workspacesConfigs.${config.hostName} or workspacesConfigs.default;
 
-        "hyprland/window" = {
-          separate-outputs = true;
+        "dwl/window" = {
           format = "{title}";
           icon = true;
           icon-size = 24;

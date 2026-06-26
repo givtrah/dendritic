@@ -4,7 +4,7 @@
     
     environment.systemPackages = [
       # 1. Host-dependent wrappers that need custom arguments
-      (self.wrappers.mango.wrap { inherit pkgs; hostName = config.networking.hostName; })
+#      (self.wrappers.mango.wrap { inherit pkgs; hostName = config.networking.hostName; })
       (self.wrappers.hyprland.wrap { inherit pkgs; hostName = config.networking.hostName; })      
       (self.wrappers.waybar.wrap { inherit pkgs; hostName = config.networking.hostName; })
 
@@ -15,8 +15,9 @@
       "kitty"
       "neovim"
       "rofi"
-      "swaylock"
-      "swayidle"
+#      "swaylock"
+#      "swayidle"
+      "hyprlock"
     ]);
 
   };

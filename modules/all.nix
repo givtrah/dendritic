@@ -1,55 +1,15 @@
 {self, inputs, ...}: {
 # this is to be separated out later into separate parts
 
-# files covered:
-#
-# modules/common.nix DONE
-# modules/home.nix DONE - moved into home.nix, nixosModules.home
-# modules/hosts.nix DONE
-# modules/locale_tz.nix DONE
-# modules/nemo DONE
-# modules/plasma6.nix DONE
-# modules/sddm.nix DONE
-# modules/sound.nix DONE
-# modules/users.nixa DONE
-# modules/uwsm.nix DONE
-# modules/work.nix DONE - moved into work.nix, nixosModules.work 
-
 # files completely or mostly ignored:
 # modules/cosmic.nix - not using
 # modules/distrobox.nix - later: add distrobox, docker, podman etc. 
-# modules/dropbox.nix - using maestral instead
 # modules/hyprland.nix - replaced by uwsm.nix so not used
 # modules/libs.nix - for using non-nix programs, prob mostly old neovim setup, excluded for now, check programs later!
 # modules/llm.nix+ollama.nix - for later
-# modules/onlyoffice.nix - the onlyoffice documentserver (most likely not needed)
-# modules/regreet.nix - not used
-# modules/sway.nix - not used
-# modules/thunar.nix - not used
-# modules/virt.nix - not used
 
-# home/common DONE
-# features/bash DONE (in wrapped)
-# features/browsers DONE (pkgs + programs below)
-# features/cli-tools DONE (added here)
-# features/desktop.nix DONE (added here)
-# features/dev.nix DONE (added here)
-
-# features/flatpak DONE (services here, packages in flatpak.nix)
-# features/fonts.nix DONE (here)
-# features/gaming.nix DONE (moved to gaming.nix - beware no pointer size)
 # f/mimetypes MISSING TO BE DONE (in general, not per user, search nix options)
-# hyprland stuff - MISSING, switching to MangoWM
-# f/office DONE (here)
-# pywal16.nix - DONE (here) 
-# f/qemu.nix - not used (so later)
 # f/r.nix - LATER
-# f/rofi.nix - DONE
-# sway.nix - NOT USED
-# swaylock.nix - later for MangoWM
-# terminals - DONE (kitty only)
-# waybar.nix - DONE (needs testing)
-# wofi - UNUSED (using rofi)
 
 # suggested additional programs for mangowm
 # app launcher: Rofi, done
@@ -83,7 +43,7 @@
 
     # modules that are always needed
     imports = [
-      inputs.mangowm.nixosModules.mango
+      inputs.mangowm.nixosModules.mango # not needed anymore if giving up on mango
       inputs.nix-flatpak.nixosModules.nix-flatpak
 
     ];
@@ -232,7 +192,27 @@
         wireplumber.enable = true;
       };
 
-
+      hypridle = {
+        enable = true;
+        settings = {
+          general = {
+            lock_cmd = "pidof hyprlock || hyprlock";
+            before_sleep_cmd = "loginctl lock-session";
+            after_sleep_cmd = "hyprctl dispatch dpms on";
+          };
+          listener = [
+            {
+              timeout = 900;
+              on-timeout = "loginctl lock-session";
+            }
+            {
+              timeout = 1200;
+              on-timeout = "hyprctl dispatch dpms off";
+              on-resume = "hyprctl dispatch dpms on && brightnessctl -r";
+            }
+          ];
+        };
+      };
 
 
     };
@@ -662,10 +642,6 @@
 
       gsmartcontrol
       # productivity / work
-      kitty
-      kitty-themes
-      kitty-img
-      starship
 
       #  zettlr
       remmina
