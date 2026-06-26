@@ -31,9 +31,9 @@ hl.on("hyprland.start", function()
 end)
 
 -- Executed every single time Hyprland reloads its configuration state
-hl.on("hyprland.reload", function()
-    hl.exec_cmd("waybar-reload")
-end)
+-- hl.on("hyprland.reload", function()
+--    hl.exec_cmd("waybar-reload")
+-- end)
 
 
 -- potentially missing 1 line of dbus-update and 2 lines of systemctl (should be handled by uwsm)

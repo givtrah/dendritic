@@ -4,7 +4,7 @@
 
 -- 1. Physical Monitor Layout
 hl.monitor({
-  name = "DP-2",
+  output = "DP-2",
   resolution = "3840x2160",
   position = "0x0",
   scale = 1.5
@@ -12,7 +12,7 @@ hl.monitor({
 
 -- Portrait rotated monitor with custom padding boundaries
 hl.monitor({
-  name = "DP-4",
+  output = "DP-4",
   resolution = "3840x2160",
   position = "2560x-560",
   scale = 1.5,
