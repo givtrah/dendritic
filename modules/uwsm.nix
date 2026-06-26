@@ -4,24 +4,31 @@
     
     # 1. Wire the env file directly to ~/.config/uwsm/env via NixOS/Home Manager config
     # Adjust this path depending on where your raw 'uwsm-env' text file sits
-    environment.etc."uwsm/env".source = ../wrappedPrograms/mango/uwsm-env;
+    environment.etc."uwsm/env".source = ./uwsm-env;
 
     # 2. Configure UWSM system-wide service registry
     programs.uwsm = {
       enable = true;
       waylandCompositors = {
+        
+        # --- MangoWM Entry ---
         mango = {
           prettyName = "MangoWM";
           comment = "Mango Window Manager managed by UWSM";
-          
-          # Dynamically map the path using sessionPackages so it points to your wrapper automatically
-#          binPath = "${config.services.displayManager.sessionPackages}/bin/mango";
           binPath = "${inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.mango.wrap { 
             hostName = config.networking.hostName; 
           }}/bin/mango";
-
-
         };
+
+        # --- Hyprland Entry ---
+        hyprland = {
+          prettyName = "Hyprland (Lua Edition)";
+          comment = "Hyprland Compositor managed by UWSM";
+          binPath = "${inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.hyprland.wrap {
+            hostName = config.networking.hostName;
+          }}/bin/hyprland";
+        };
+
       };
     };
 

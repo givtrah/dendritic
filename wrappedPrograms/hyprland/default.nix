@@ -19,40 +19,77 @@
     config = {
       package = lib.mkDefault pkgs.hyprland;
 
-      # 1. Compile the sub-config module slices
+      # Inject dependencies and local runtime script derivations here!
+      runtimePkgs = [ 
+        pkgs.adwaita-icon-theme 
+        pkgs.hyprpolkitagent
+	pkgs.hyprland
+	pkgs.hyprshutdown
+        # Evaluates the scripts passing down the current module pkgs context
+        (import ./scripts/_wall-random.nix { inherit pkgs; wallpaperDir = ./../../wallpapers; })
+        (import ./scripts/_waybar-reload.nix { inherit pkgs; })
+      ];
+
       constructFiles = {
         
-        # Core configuration options (gaps, decoration, layouts)
-        "hyprland/core.lua".content = builtins.readFile ./core.lua;
+        core = {
+          relPath = "hyprland/core.lua";
+          content = builtins.readFile ./core.lua;
+        };
         
-        # Keybindings layout
-        "hyprland/keybindings.lua".content = builtins.readFile ./keybindings.lua;
+        keybindings = {
+          relPath = "hyprland/keybindings.lua";
+          content = builtins.readFile ./keybindings.lua;
+        };
         
-        # Autostart / initialization loops
-        "hyprland/autostart.lua".content = builtins.readFile ./autostart.lua;
+        autostart = {
+          relPath = "hyprland/autostart.lua";
+          content = builtins.readFile ./autostart.lua;
+        };
 
-        # Host-specific monitors and persistent workspaces mapping
-        "hyprland/monitors.lua".content = 
-          if builtins.pathExists (./. + "/monitors-${config.hostName}.lua") 
-          then builtins.readFile (./. + "/monitors-${config.hostName}.lua")
-          else "-- No specific monitor lua config found for ${config.hostName}";
+        windows = {
+          relPath = "hyprland/windows.lua";
+          content = builtins.readFile ./windows.lua;
+        };
 
-        # 2. Main Entry point: requires the generated sub-files
-        # We modify Lua's package.path so it knows to find files in this wrapper store build!
-        "hyprland/hyprland.lua".content = ''
-          -- Instruct Lua's packager to search the relative wrapper output layout directory
-          package.path = package.path .. ";" .. "${config.constructFiles."hyprland/hyprland.lua".dir}/?.lua"
+        monitors = {
+          relPath = "hyprland/monitors.lua";
+          content = 
+            if builtins.pathExists (./. + "/monitors-${config.hostName}.lua") 
+            then builtins.readFile (./. + "/monitors-${config.hostName}.lua")
+            else ''
+              -- ==========================================
+              -- FALLBACK DEFAULT MONITOR CONFIGURATION
+              -- ==========================================
+              -- Auto-detect any connected display at preferred resolution and scaling
+              hl.monitor({ name = "", resolution = "preferred", position = "auto", scale = "auto" })
 
-          -- Load modules in sequential order
-          require("monitors")
-          require("core")
-          require("keybindings")
-          require("autostart")
-        '';
+              -- Set up basic un-anchored persistent workspaces 1-5
+              for i = 1, 5 do
+                hl.workspace_rule({ workspace = tostring(i), persistent = true })
+              end
+            '';
+        };
+
+        # Main Entry Point
+        main = {
+          relPath = "hyprland/hyprland.lua";
+          content = ''
+            -- Instruct Lua's packager to search the relative wrapper output layout directory
+            package.path = package.path .. ";" .. "${dirOf config.constructFiles.main.path}/?.lua"
+
+            -- Load modules in sequential order
+            require("monitors")
+            require("core")
+            require("windows")
+            require("keybindings")
+            require("autostart")
+          '';
+        };
       };
 
-      # 3. Tell Hyprland binary to launch targeting the main file
-      flags."--config" = config.constructFiles."hyprland/hyprland.lua".path;
+      # Tell the Hyprland binary to launch targeting the main file path
+      flags."--config" = config.constructFiles.main.path;
     };
   };
 }
