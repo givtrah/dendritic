@@ -40,7 +40,7 @@
     package = pkgs.hypridle;
 
     # 3. Supply runtime path dependencies using your schema's key
-    runtimeInputs = [
+    runtimePkgs = [
       pkgs.hyprland
       pkgs.hyprlock
     ];
