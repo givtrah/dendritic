@@ -5,7 +5,7 @@
 -- 1. Physical Monitor Layout
 hl.monitor({
   output = "DP-2",
-  resolution = "3840x2160",
+  mode = "3840x2160",
   position = "0x0",
   scale = 1.5
 })
@@ -13,11 +13,11 @@ hl.monitor({
 -- Portrait rotated monitor with custom padding boundaries
 hl.monitor({
   output = "DP-4",
-  resolution = "3840x2160",
+  mode = "3840x2160",
   position = "2560x-560",
   scale = 1.5,
   transform = 1,
-  addreserved = "350,0,0,0" -- Equivalent to: top, bottom, left, right padding
+  reserved_area = { top = 350 }
 })
 
 -- 2. Persistent Workspaces & Defaults
