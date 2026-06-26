@@ -166,7 +166,7 @@
       xserver.enable = true;
 
       displayManager = {
-        defaultSession = "mango-uwsm";
+        defaultSession = "hyprland-uwsm";
 
         sddm = {
           enable = true;
