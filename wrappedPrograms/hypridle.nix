@@ -2,22 +2,12 @@
   flake.wrappers.hypridle = {
     wlib,
     pkgs,
-    lib,
     ...
-  }: {
-    # 1. Direct package binding without module imports
-    package = pkgs.hypridle;
-
-    # 2. Re-map required path binaries for idle triggers
-    runtimePkgs = [
-      pkgs.hyprland 
-      pkgs.hyprlock
-    ];
-
-    # 3. Use raw string injection instead of constructFiles
-    extraConfig = ''
+  }: let
+    # Inline generation of the hypridle.conf file inside the Nix store
+    hypridleConfig = pkgs.writeText "hypridle.conf" ''
       # ==========================================
-      # DYNAMIC HYPRIDLE CONFIGURATION
+      # SELF-CONTAINED HYPRIDLE CONFIGURATION
       # ==========================================
 
       general {
@@ -42,6 +32,20 @@
           on-timeout = systemctl suspend              # suspend target host machine
       }
     '';
+  in {
+    # 1. Import the default fallback module schema
+    imports = [ wlib.modules.default ];
+
+    # 2. Bind the base upstream package
+    package = pkgs.hypridle;
+
+    # 3. Supply runtime path dependencies using your schema's key
+    runtimeInputs = [
+      pkgs.hyprland
+      pkgs.hyprlock
+    ];
+
+    # 4. Map the configuration path via flags using your explicit syntax
+    flags."--config" = toString hypridleConfig;
   };
 }
-
