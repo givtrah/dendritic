@@ -25,7 +25,7 @@ local color3 = "rgba(204,61,82,1.0)"
 -- Applications & Essential Utilities
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + space", hl.dsp.exec_cmd(menu))
-hl.bind(mainMod .. " + Q", hl.dsp.window.close)
+hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(filemanager))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 
