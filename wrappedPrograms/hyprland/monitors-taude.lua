@@ -3,8 +3,19 @@
 -- ==========================================
 
 -- 1. Physical Monitor Layout
-hl.monitor({ output = "DP-1", resolution = "3840x2160", position = "0x0", scale = 1.5 })
-hl.monitor({ output = "DP-2", resolution = "3840x2160", position = "2560x0", scale = 1.5 })
+hl.monitor({
+  output = "DP-1",
+  mode = "3840x2160",
+  position = "0x0",
+  scale = 1.5
+})
+
+hl.monitor({
+  output = "DP-2",
+  mode = "3840x2160",
+  position = "2560x0",
+  scale = 1.5
+})
 
 -- 2. Persistent Workspaces & Defaults
 for i = 1, 7 do
