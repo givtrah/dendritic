@@ -15,8 +15,7 @@
       "kitty"
       "neovim"
       "rofi"
-#      "swaylock"
-#      "swayidle"
+      "hypridle"
       "hyprlock"
     ]);
 

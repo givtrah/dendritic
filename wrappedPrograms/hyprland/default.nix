@@ -23,8 +23,8 @@
       runtimePkgs = [ 
         pkgs.adwaita-icon-theme 
         pkgs.hyprpolkitagent
-	pkgs.hyprland
-	pkgs.hyprshutdown
+	      pkgs.hyprland
+	      pkgs.hyprshutdown
         # Evaluates the scripts passing down the current module pkgs context
         (import ./scripts/_wall-random.nix { inherit pkgs; wallpaperDir = ./../../wallpapers; })
         (import ./scripts/_waybar-reload.nix { inherit pkgs; })
